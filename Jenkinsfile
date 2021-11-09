@@ -14,14 +14,8 @@ retriever: modernSCM(
 appName = "openshift-jenkins"
 
 pipeline {
-    // Use the 'gradle' Jenkins agent image which is provided with OpenShift
-    agent {
-        docker {
-            image 'openjdk:8'
-            args  '-v /tmp:/tmp'
-            reuseNode true
-        }
-    }
+    // Use the 'maven' Jenkins agent image which is provided with OpenShift 
+    agent { label "kubernetes" }
     stages {
         stage("Checkout") {
             steps {
