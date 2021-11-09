@@ -11,11 +11,17 @@ retriever: modernSCM(
 
 // The name you want to give your Spring Boot application
 // Each resource related to your app will be given this name
-appName = "hello-java-spring-boot"
+appName = "openshift-jenkins"
 
 pipeline {
-    // Use the 'maven' Jenkins agent image which is provided with OpenShift
-    agent { label "maven" }
+    // Use the 'gradle' Jenkins agent image which is provided with OpenShift
+    agent {
+        docker {
+            image 'openjdk:8'
+            args  '-v /tmp:/tmp'
+            reuseNode true
+        }
+    }
     stages {
         stage("Checkout") {
             steps {
