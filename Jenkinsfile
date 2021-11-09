@@ -1,13 +1,17 @@
+// Based on:
+// https://raw.githubusercontent.com/redhat-cop/container-pipelines/master/basic-spring-boot/Jenkinsfile
+
+library identifier: "pipeline-library@v1.5",
 retriever: modernSCM(
   [
     $class: "GitSCMSource",
-    remote: "https://github.com/lavi2088/openshift-jenkins.git"
+    remote: "https://github.com/redhat-cop/pipeline-library.git"
   ]
 )
 
 // The name you want to give your Spring Boot application
 // Each resource related to your app will be given this name
-appName = "openshift-jenkins"
+appName = "hello-java-spring-boot"
 
 pipeline {
     // Use the 'maven' Jenkins agent image which is provided with OpenShift 
