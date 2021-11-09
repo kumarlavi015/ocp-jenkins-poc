@@ -11,7 +11,7 @@ appName = "openshift-jenkins"
 
 pipeline {
     // Use the 'maven' Jenkins agent image which is provided with OpenShift 
-    agent { label "kubernetes" }
+    //agent { label "kubernetes" }
     stages {
         stage("Checkout") {
             steps {
