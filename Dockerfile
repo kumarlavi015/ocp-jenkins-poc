@@ -1,14 +1,8 @@
-FROM gradle:4.7.0-jdk8-alpine AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build --no-daemon
+FROM adoptopenjdk/openjdk11:alpine-jre
 
-FROM openjdk:8-jre-slim
+ARG APP_NAME="product-service"
+ARG APP_VERSION="0.0.1"
+ARG JAR_FILE="/build/libs/${APP_NAME}-${APP_VERSION}.jar"
 
-EXPOSE 8080
-
-RUN mkdir /app
-
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
-
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar", "app.jar"]
