@@ -1,5 +1,7 @@
-FROM openjdk:8-jdk-alpine
+# Inject the JAR file into a new container to keep the file small
+FROM openjdk:8-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/openshiftpoc*.jar /app/app.jar
 EXPOSE 8080
-ARG JAR_FILE=target/app.jar
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["sh", "-c"]
+CMD ["java -jar app.jar"]
